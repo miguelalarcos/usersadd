@@ -1,5 +1,5 @@
 import subprocess
-from fabric.api import sudo, env, execute, warn_only
+from fabric.api import run, env, execute, warn_only, settings
 from pymongo import MongoClient
 from time import sleep
 import pwd
@@ -10,7 +10,8 @@ env.skip_bad_hosts = True
 
 
 def adduser(user, password, uid):
-    return sudo('useradd {user} -d /mnt/users/{user} -p `openssl passwd {password}` -u {uid}'.
+    with settings(user='root'):
+        return run('useradd {user} -d /mnt/users/{user} -p `openssl passwd {password}` -u {uid}'.
              format(user=user, password=password, uid=uid))
 
 
