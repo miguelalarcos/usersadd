@@ -11,6 +11,7 @@ env.skip_bad_hosts = True
 
 def adduser(user, password, uid):
     with settings(user='root'):
+        run('whoami')
         return run('useradd {user} -d /mnt/users/{user} -p `openssl passwd {password}` -u {uid}'.
              format(user=user, password=password, uid=uid))
 
